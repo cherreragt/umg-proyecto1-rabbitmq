@@ -7,24 +7,23 @@ import sys
 import time
 
 queues = [
-    {'name': 'project.callcenter', 'routing_key': 'routing-callcenter', 'operator': 'Operador Call Center'},
-    {'name': 'project.app', 'routing_key': 'routing-app', 'operator': 'Operador App Móvil'},
+    #{'name': 'project.callcenter', 'routing_key': 'routing-callcenter', 'operator': 'Operador Call Center'},
+    #{'name': 'project.app', 'routing_key': 'routing-app', 'operator': 'Operador App Móvil'},
     {'name': 'project.web', 'routing_key': 'routing-web', 'operator': 'Operador Página Web'}
 ]
 
 exchangeName = 'project.ex.direct'
 
-# Datos de ejemplo para generar pedidos aleatorios
-clientes = ["Alice", "Bob", "Charlie", "David", "Eva"]
-direcciones = [
+clients = ["Alice", "Bob", "Charlie", "David", "Eva"]
+addresses = [
     "Av. Siempre Viva 123",
     "Calle Falsa 456",
     "Boulevard de los Sueños 789",
     "Plaza Mayor 101",
     "Callejón del Beso 202"
 ]
-tipos_pedido = ["Pizza", "Hamburguesa", "Sushi", "Ensalada", "Pasta"]
-descripciones = [
+orderTypes = ["Pizza", "Hamburguesa", "Sushi", "Ensalada", "Pasta"]
+descriptions = [
     "Sin cebolla",
     "Extra queso",
     "Con doble ración de carne",
@@ -54,30 +53,29 @@ def main():
             selected_queue = random.choice(queues)
             routing_key = selected_queue['routing_key']
 
-            # Generar datos aleatorios para el pedido
-            pedido_id = str(uuid.uuid4())
-            fecha_hora = datetime.now().isoformat()
-            cliente = random.choice(clientes)
-            direccion = random.choice(direcciones)
-            tipo_pedido = random.choice(tipos_pedido)
-            descripcion = random.choice(descripciones)
+            order_id = str(uuid.uuid4())
+            date = datetime.now().isoformat()
+            cliente = random.choice(clients)
+            address = random.choice(addresses)
+            order_type = random.choice(orderTypes)
+            description = random.choice(descriptions)
 
-            pedido = {
-                "id": pedido_id,
-                "fecha_hora": fecha_hora,
+            order = {
+                "id": order_id,
+                "fecha_hora": date,
                 "cliente": cliente,
-                "direccion": direccion,
-                "tipo_pedido": tipo_pedido,
+                "direccion": address,
+                "tipo_pedido": order_type,
                 'estado': 'Generado',
-                "descripcion": descripcion
+                "descripcion": description
             }
 
-            json_mensaje = json.dumps(pedido)
+            json_message = json.dumps(order)
 
             channel.basic_publish(
                 exchange=exchangeName,
                 routing_key=routing_key,
-                body=json_mensaje,
+                body=json_message,
                 properties=pika.BasicProperties(
                     content_type='application/json',
                     delivery_mode=2
@@ -86,7 +84,7 @@ def main():
 
             print(f"\nMensaje JSON enviado al exchange '{exchangeName}' con routing key '{routing_key}'")
             print("Datos del pedido:")
-            print(json_mensaje)
+            print(json_message)
 
             time.sleep(5)
 

@@ -12,8 +12,8 @@ queueRoutingKey = 'routing-callcenter'
 
 
 queues = [
-    {'name': 'project.callcenter', 'routing_key': 'routing-callcenter'},
-    {'name': 'project.app', 'routing_key': 'routing-app'},
+    #{'name': 'project.callcenter', 'routing_key': 'routing-callcenter'},
+    #{'name': 'project.app', 'routing_key': 'routing-app'},
     {'name': 'project.web', 'routing_key': 'routing-web'}
 ]
 
