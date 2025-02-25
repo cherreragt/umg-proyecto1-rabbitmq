@@ -7,10 +7,6 @@ import sys
 exchangeName = 'project.ex.direct'
 exchangeType = 'direct'
 
-queueName = 'project.callcenter'
-queueRoutingKey = 'routing-callcenter'
-
-
 queues = [
     #{'name': 'project.callcenter', 'routing_key': 'routing-callcenter'},
     #{'name': 'project.app', 'routing_key': 'routing-app'},
